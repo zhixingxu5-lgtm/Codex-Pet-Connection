@@ -4,7 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "build:workspace": "pnpm --dir ../.. build:libs",
+    "predev": "pnpm run build:workspace",
     "dev": "vite",
+    "prebuild": "pnpm run build:workspace",
     "build": "tsc -b && vite build",
     "typecheck": "tsc -b --pretty false",
     "test": "vitest run --passWithNoTests",
