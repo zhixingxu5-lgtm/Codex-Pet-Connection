@@ -1,0 +1,17 @@
+{
+  "name": "codex-pet-link",
+  "version": "0.1.0",
+  "description": "Reports privacy-filtered Codex lifecycle states to the local Codex Pet Link desktop app.",
+  "author": {
+    "name": "Codex Pet Link"
+  },
+  "interface": {
+    "displayName": "Codex Pet Link",
+    "shortDescription": "Sync abstract Codex task states to your desktop pet.",
+    "longDescription": "Runs local lifecycle hooks that send only session identifiers and abstract state transitions to Codex Pet Link. Prompt text, code, file paths, project names, tool inputs, and assistant replies are discarded.",
+    "developerName": "Codex Pet Link",
+    "category": "Productivity",
+    "capabilities": ["Local lifecycle status"],
+    "defaultPrompt": "Check whether the Codex Pet Link desktop app is receiving lifecycle status."
+  }
+}

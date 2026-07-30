@@ -1,0 +1,67 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: petlink
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD}
+      POSTGRES_DB: petlink
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U petlink -d petlink"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks: [petlink-internal]
+
+  sync-server:
+    build:
+      context: ../..
+      dockerfile: services/sync-server/Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgres://petlink:${POSTGRES_PASSWORD}@postgres:5432/petlink
+      HOST: 0.0.0.0
+      PORT: 8787
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8787/healthz >/dev/null || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks: [petlink-internal]
+
+  caddy:
+    image: caddy:2.10-alpine
+    restart: unless-stopped
+    environment:
+      PETLINK_DOMAIN: ${PETLINK_DOMAIN:?set PETLINK_DOMAIN}
+      ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL}
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      sync-server:
+        condition: service_healthy
+    networks:
+      - petlink-internal
+      - petlink-public
+
+volumes:
+  postgres-data:
+  caddy-data:
+  caddy-config:
+
+networks:
+  petlink-internal:
+    internal: true
+  petlink-public:

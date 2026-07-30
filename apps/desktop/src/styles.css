@@ -1,0 +1,54 @@
+:root {
+  font-family: Inter, ui-rounded, "SF Pro Rounded", "Segoe UI", sans-serif;
+  color: #17222c;
+  background: transparent;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; min-height: 100vh; background: transparent; }
+button, input { font: inherit; }
+button { border: 0; border-radius: 12px; padding: 10px 15px; background: #ffcc66; color: #2f291f; font-weight: 700; cursor: pointer; }
+button:hover { filter: brightness(.97); }
+button.secondary { background: #edf1f3; color: #33434e; }
+button.danger { background: #ffe3de; color: #a63424; }
+input { border: 1px solid #d8dfe3; border-radius: 12px; padding: 10px 12px; min-width: 180px; }
+
+.pet-window { width: 100vw; height: 100vh; overflow: hidden; display: grid; place-items: end center; user-select: none; cursor: grab; }
+.owner-label { position: absolute; top: 4px; left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 4px 9px; border-radius: 999px; background: rgba(255,255,255,.78); color: #41515d; font-size: 11px; backdrop-filter: blur(8px); }
+.penguin { position: relative; width: 200px; height: 220px; display: grid; place-items: end center; animation: breathe 2.6s ease-in-out infinite; transform-origin: center bottom; }
+.sprite-strip { width: 192px; height: 208px; background-image: var(--sprite-url); background-repeat: no-repeat; background-size: 800% 100%; background-position: 0 0; transform-origin: center bottom; }
+.sprite-loop { animation: sprite-strip .9s steps(7) infinite; }.sprite-once { animation: sprite-strip .9s steps(7) 1 forwards; }
+.penguin-body { position: relative; width: 118px; height: 150px; border-radius: 58% 58% 48% 48%; background: #202a34; box-shadow: 0 14px 24px rgba(25,36,46,.18); }
+.penguin-head { position: absolute; width: 98px; height: 78px; top: 6px; left: 10px; border-radius: 50% 50% 46% 46%; background: #202a34; z-index: 3; }
+.penguin-belly { position: absolute; width: 76px; height: 96px; left: 21px; bottom: 8px; border-radius: 55% 55% 46% 46%; background: #f8faf8; }
+.eye { position: absolute; width: 10px; height: 13px; top: 30px; border-radius: 50%; background: #fefefe; box-shadow: inset 0 -5px #29323a; }
+.eye-left { left: 27px; }.eye-right { right: 27px; }
+.beak { position: absolute; width: 26px; height: 18px; left: 36px; top: 48px; background: #ffbd4a; clip-path: polygon(0 0,100% 0,50% 100%); }
+.wing { position: absolute; width: 35px; height: 82px; top: 51px; border-radius: 70% 40% 70% 40%; background: #151e26; z-index: -1; }
+.wing-left { left: -18px; transform: rotate(13deg); }.wing-right { right: -18px; transform: scaleX(-1) rotate(13deg); }
+.laptop { position: absolute; z-index: 5; width: 98px; height: 58px; bottom: 3px; left: 10px; background: #dce4e8; border-radius: 7px 7px 13px 13px; border: 4px solid #adbcc4; transform: perspective(130px) rotateX(-8deg); }
+.laptop span { display: block; width: 13px; height: 13px; border-radius: 50%; background: #ffcc66; margin: 17px auto; }
+.status-bubble { position: absolute; top: 32px; right: 19px; width: 32px; height: 32px; display: grid; place-items: center; z-index: 8; border-radius: 50%; background: white; color: #e99e18; font-size: 22px; font-weight: 900; box-shadow: 0 5px 13px rgba(31,43,52,.18); }
+.pet-caption { position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); white-space: nowrap; color: #53636e; font-size: 12px; font-weight: 700; }
+.task-running .wing-left { animation: type-left .4s ease-in-out infinite alternate; }.task-running .wing-right { animation: type-right .4s ease-in-out infinite alternate; }
+.task-needs_input { animation: ask .7s ease-in-out infinite alternate; }.task-blocked { filter: saturate(.45); transform: rotate(-4deg); }.task-ready { animation: celebrate .55s ease-in-out 3; }
+.energy-tired .penguin-head { transform: translateY(8px); }.energy-exhausted .penguin-head { transform: translateY(18px) rotate(8deg); }.energy-exhausted { animation-duration: 4s; }
+.presence-offline, .presence-privacy_hidden { filter: grayscale(1); opacity: .56; }.presence-offline .penguin-head { transform: translateY(13px) rotate(5deg); }
+.reduce-motion, .reduce-motion * { animation: none !important; transition: none !important; }
+@keyframes breathe { 0%,100% { transform: translateY(0) scaleY(1); } 50% { transform: translateY(-3px) scaleY(1.015); } }
+@keyframes ask { to { transform: translateY(-7px) rotate(2deg); } }
+@keyframes celebrate { 50% { transform: translateY(-13px) rotate(-4deg); } }
+@keyframes type-left { to { transform: rotate(28deg); } }
+@keyframes type-right { to { transform: scaleX(-1) rotate(28deg); } }
+@keyframes sprite-strip { to { background-position: 100% 0; } }
+
+.settings-shell { min-height: 100vh; padding: 28px; background: linear-gradient(150deg, #fffdf6, #f3f7f8); }
+.settings-shell header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 22px; }
+.settings-shell h1 { margin: 4px 0 0; font-size: 30px; }.settings-shell h2 { margin: 0 0 14px; font-size: 17px; }.settings-shell small { color: #81909a; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.settings-shell section { max-width: 760px; margin: 14px auto; padding: 20px; border: 1px solid rgba(130,151,163,.18); border-radius: 20px; background: rgba(255,255,255,.84); box-shadow: 0 12px 38px rgba(44,63,76,.06); }
+.settings-shell header { max-width: 760px; margin-left: auto; margin-right: auto; }
+.hero-card { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; background: #26333d !important; color: white; }.hero-card p { margin: 7px 0 0; color: #cbd6dc; }
+.row, .toggle { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 10px 0; }.toggle input { min-width: auto; width: 19px; height: 19px; accent-color: #e9a72f; }
+.pairing-code { font-size: 23px; letter-spacing: .13em; padding: 7px 10px; border-radius: 9px; background: #fff5d9; }.simulation-grid { display: flex; flex-wrap: wrap; gap: 8px; }.muted { color: #687882; line-height: 1.55; }.notice { max-width: 760px; margin: 16px auto; padding: 12px 15px; border-radius: 12px; background: #fff3ce; color: #735417; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; scroll-behavior: auto !important; } }

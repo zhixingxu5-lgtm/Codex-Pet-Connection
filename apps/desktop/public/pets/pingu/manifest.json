@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "pingu",
+  "displayName": "Pingu",
+  "license": "MIT",
+  "fallbackRenderer": "css-pingu",
+  "sprite": {
+    "frameWidth": 192,
+    "frameHeight": 208,
+    "frameCount": 8,
+    "layout": "horizontal-webp-strip"
+  },
+  "animations": {
+    "idle_relaxed": "sprites/idle_relaxed.webp",
+    "idle_focused": "sprites/idle_focused.webp",
+    "idle_tired": "sprites/idle_tired.webp",
+    "idle_exhausted": "sprites/idle_exhausted.webp",
+    "running_relaxed": "sprites/running_relaxed.webp",
+    "running_focused": "sprites/running_focused.webp",
+    "running_tired": "sprites/running_tired.webp",
+    "running_exhausted": "sprites/running_exhausted.webp",
+    "needs_input": "sprites/needs_input.webp",
+    "ready": "sprites/ready.webp",
+    "blocked": "sprites/blocked.webp",
+    "offline": "sprites/offline.webp"
+  }
+}

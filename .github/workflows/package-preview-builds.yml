@@ -1,0 +1,57 @@
+name: Package preview builds
+
+on:
+  workflow_dispatch:
+
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-14
+            platform: macos
+            hookBinary: target/release/petlink-hook
+            bundlePaths: |
+              target/release/bundle/dmg/*.dmg
+          - os: windows-latest
+            platform: windows
+            hookBinary: target/release/petlink-hook.exe
+            bundlePaths: |
+              target/release/bundle/msi/*.msi
+              target/release/bundle/nsis/*.exe
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.9.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - uses: dtolnay/rust-toolchain@stable
+      - run: pnpm install --frozen-lockfile
+      - run: cargo build --release -p petlink-hook
+      - shell: bash
+        run: |
+          mkdir -p "integrations/codex-marketplace/plugins/codex-pet-link/bin/${{ matrix.platform }}"
+          cp "${{ matrix.hookBinary }}" "integrations/codex-marketplace/plugins/codex-pet-link/bin/${{ matrix.platform }}/"
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: apps/desktop
+          args: --verbose
+      - shell: bash
+        run: |
+          if command -v sha256sum >/dev/null 2>&1; then checksum="sha256sum"; else checksum="shasum -a 256"; fi
+          find target/release/bundle -type f \( -name '*.dmg' -o -name '*.msi' -o -name '*.exe' \) -print0 \
+            | xargs -0 $checksum > "target/release/bundle/SHA256SUMS-${{ matrix.platform }}.txt"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: codex-pet-link-${{ matrix.platform }}-unsigned
+          path: |
+            ${{ matrix.bundlePaths }}
+            target/release/bundle/SHA256SUMS-${{ matrix.platform }}.txt
+          if-no-files-found: error

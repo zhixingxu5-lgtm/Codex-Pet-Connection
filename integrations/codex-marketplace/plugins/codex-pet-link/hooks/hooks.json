@@ -1,0 +1,69 @@
+{
+  "description": "Send privacy-filtered lifecycle state to the local Codex Pet Link app.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$PLUGIN_ROOT/scripts/petlink-hook.sh\"",
+            "commandWindows": "\"%PLUGIN_ROOT%\\scripts\\petlink-hook.cmd\"",
+            "timeout": 3,
+            "statusMessage": "Updating your desktop pet"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$PLUGIN_ROOT/scripts/petlink-hook.sh\"",
+            "commandWindows": "\"%PLUGIN_ROOT%\\scripts\\petlink-hook.cmd\"",
+            "timeout": 3,
+            "statusMessage": "Updating your desktop pet"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$PLUGIN_ROOT/scripts/petlink-hook.sh\"",
+            "commandWindows": "\"%PLUGIN_ROOT%\\scripts\\petlink-hook.cmd\"",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$PLUGIN_ROOT/scripts/petlink-hook.sh\"",
+            "commandWindows": "\"%PLUGIN_ROOT%\\scripts\\petlink-hook.cmd\"",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$PLUGIN_ROOT/scripts/petlink-hook.sh\"",
+            "commandWindows": "\"%PLUGIN_ROOT%\\scripts\\petlink-hook.cmd\"",
+            "timeout": 3
+          }
+        ]
+      }
+    ]
+  }
+}

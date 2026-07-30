@@ -1,0 +1,20 @@
+{
+  "name": "petlink-local",
+  "interface": {
+    "displayName": "Petlink Local"
+  },
+  "plugins": [
+    {
+      "name": "codex-pet-link",
+      "source": {
+        "source": "local",
+        "path": "./plugins/codex-pet-link"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

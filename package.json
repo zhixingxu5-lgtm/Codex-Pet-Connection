@@ -1,0 +1,24 @@
+{
+  "name": "codex-pet-link",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@11.9.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "pnpm -r --if-present build",
+    "build:libs": "pnpm --filter @petlink/protocol build && pnpm --filter @petlink/core build",
+    "test": "pnpm build:libs && pnpm -r --if-present test && node --test integrations/codex-marketplace/plugins/codex-pet-link/scripts/petlink-hook.test.mjs",
+    "test:integration": "pnpm build:libs && pnpm --filter @petlink/sync-server test:integration",
+    "typecheck": "pnpm build:libs && pnpm -r --if-present typecheck",
+    "dev:desktop": "pnpm --filter @petlink/desktop tauri dev",
+    "dev:server": "pnpm --filter @petlink/sync-server dev",
+    "validate:plugin": "node scripts/validate-plugin.mjs",
+    "validate:repo": "node scripts/validate-repo.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

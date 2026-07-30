@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "defaultPetId": "pingu",
+  "pets": [
+    {
+      "id": "pingu",
+      "manifest": "/pets/pingu/manifest.json"
+    }
+  ]
+}

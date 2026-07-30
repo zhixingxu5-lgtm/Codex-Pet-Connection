@@ -1,0 +1,9 @@
+* text=auto eol=lf
+*.cmd text eol=crlf
+*.png binary
+*.ico binary
+*.icns binary
+*.webp binary
+*.dmg binary
+*.msi binary
+*.exe binary

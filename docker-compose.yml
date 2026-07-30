@@ -1,0 +1,32 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: petlink
+      POSTGRES_PASSWORD: petlink
+      POSTGRES_DB: petlink
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U petlink"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    volumes:
+      - petlink-postgres:/var/lib/postgresql/data
+  sync-server:
+    build:
+      context: .
+      dockerfile: services/sync-server/Dockerfile
+    environment:
+      DATABASE_URL: postgres://petlink:petlink@postgres:5432/petlink
+      HOST: 0.0.0.0
+      PORT: 8787
+    ports:
+      - "8787:8787"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  petlink-postgres:
